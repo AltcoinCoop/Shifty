@@ -529,20 +529,24 @@ jQuery( document ).ready(function( $ ) {
         }
 	});
     $('.form-submit').click(function(){
-        if($('.ssio-currency-dropdown').val() !== '---') {
+	if($('.ssio-currency-dropdown').val() !== '---') {
+	    if($('#return-address').val() === ''){
+		alert("return address required!!!!")
+	    }else{
+		var re_coin = $('.ssio-currency-dropdown').val();
+		if($('#amount').val().length == 0) {
+		    window.setInterval(function(){
+			getRates(re_coin);
+		    }, 30000);
+		}
+		pay_button_clicked();
+		var steps_height = $('.status-window .status-inner').height();
+		$('.status-window').animate({
+		    height: steps_height
+		}, 500, 'easeInOutExpo');
+	    }
 
-            var re_coin = $('.ssio-currency-dropdown').val();
-            if($('#amount').val().length == 0) {
-                window.setInterval(function(){
-                    getRates(re_coin);
-                }, 30000);
-            }
-            pay_button_clicked();
-            var steps_height = $('.status-window .status-inner').height();
-            $('.status-window').animate({
-                height: steps_height
-            }, 500, 'easeInOutExpo');
-        }
+	}
 
     });
 
